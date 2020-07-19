@@ -3,7 +3,7 @@
 
 ## Description
 
-PVRM stands for /Personalized Vehicle Registration Marks/. This is the Hong Kong government auction system, created in 2006, by which citizens can bid for a particular car plate. Auctions are public and the price of each plate published in a (dirty) PDF file every month.
+PVRM stands for *Personalized Vehicle Registration Marks*. This is the [Hong Kong government auction system](https://www.td.gov.hk/en/public_services/vehicle_registration_mark/index.html), created in 2006, by which citizens can bid for a particular car plate. Auctions are public and the price of each plate published in a (dirty) PDF file every month.
 
 This package offers a simple query system for people to know whether a plate is available and if not, when it was initially purchased from the government and at what price. The database includes:
 * PVRM plates allocated since the first auction held by the government on 16 September 2006.
