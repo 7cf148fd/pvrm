@@ -1,5 +1,5 @@
 # pvrm
-[![7CF](https://img.shields.io/static/v1?label=by&message=7cf148fd&color=fc7&style=flat)](https://7cf148fd.wordpress.com/about-en/) [![VERSION](https://img.shields.io/github/package-json/v/7cf148fd/pvrm)](https://github.com/7cf148fd/pvrm) [![STATUS](https://img.shields.io/static/v1?label=status&message=dev&color=911&style=flat)]() [![LICENSE](https://img.shields.io/static/v1?label=license&message=MIT&color=777&style=flat)](https://opensource.org/licenses/MIT)
+[![7CF](https://img.shields.io/static/v1?label=by&message=7cf148fd&color=fc7&style=flat)](https://7cf148fd.wordpress.com/about-en/) [![VERSION](https://img.shields.io/github/package-json/v/7cf148fd/pvrm)](https://github.com/7cf148fd/pvrm) [![STATUS](https://img.shields.io/static/v1?label=status&message=public&color=191&style=flat)]() [![LICENSE](https://img.shields.io/static/v1?label=license&message=MIT&color=777&style=flat)](https://opensource.org/licenses/MIT)
 
 ## Description
 
@@ -16,7 +16,7 @@ PVRM ordinary registration marks (such as HK+digits or XX+digits) are *not* incl
 
 Return format:
 ```js
-{ plate: '<string>',      // the plate found (UPPERCASE)
+{ mark: '<string>',      // cleanup result (UPPERCASE)
   auctionDate: '<date>',  // in ISO-8601 format (standard JSON date)
   value: <value>,         // in Hong Kong dollars
  }
@@ -25,6 +25,7 @@ Return format:
 The module cleans up the argument to match qualifying PVRM criteria. In particular:
 * Everything is converted to UPPERCASE
 * All 'O' and 'I' letters are replaced by '0' and '1' digits, respectively
+* All diacritics are removed
 * *Spaces are removed*, as plate requests that differ from an existing one only by spaces are not allowed
 
 The `auctionDate` has its hour arbitrarily set to 9:25am Hong Kong time, which is the usual auction time.
@@ -33,7 +34,7 @@ If the plate is not found, the auction date will be set to `undefined` and Value
 
 The module will throw an error if the requested plate:
 * is longer than 8 characters, even after clean-up and space removal
-* contains illegal characters (eg, 'Q' letter, diacritics, etc.)
+* contains the letter 'Q' or other special/illegal characters
 * is a TVRM plate (eg 1-4 digits only, 2 letters plus 1-4 digits, or special A/F plates)
 
 I am doing my best to keep the module updated as fast as possible after auctions.
@@ -55,23 +56,23 @@ const pvrm = require('pvrm')
 // usage: pvrm.query( 'plate' )
 
 pvrm.query( 'I LOVE U' )
-// { plate:'1L0VEU', auctionDate:'2006-09-16T09:25:00.000+08', value:1400000 }
+// { mark:'1L0VEU', auctionDate:'2006-09-16T09:25:00.000+08', value:1400000 }
 
 pvrm.query( 'HAVE FUN' )
-// { plate:'HAVEFUN', auctionDate:'2008-06-14T09:25:00.000+08', value:7000 }
+// { mark:'HAVEFUN', auctionDate:'2008-06-14T09:25:00.000+08', value:7000 }
 
 pvrm.query( 123456 )
-// { plate:'123456', auctionDate:'2009-12-19T09:25:00.000+08', value:34000 }
+// { mark:'123456', auctionDate:'2009-12-19T09:25:00.000+08', value:34000 }
 
 pvrm.query( '7CF148FD' )
-// { plate:'7CF148FD', auctionDate:undefined, value:0 }
+// { mark:'7CF148FD', value:0 }
 
-pvrm.query( '123456789' )
-// Error plate too long
+pvrm.query( '12456789' )
+// Error Mark is too long
 
 pvrm.query( 'AB 1234' )
-// Error TVRM number
+// Error Mark is TVRM
 
-pvrm.query( 'ABC Q' )
-// Error invalid characters
+pvrm.query( 'FAQ' )
+// Error Invalid character
 ```

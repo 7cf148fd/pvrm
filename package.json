@@ -1,13 +1,16 @@
 {
   "name": "pvrm",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A node.js module to retrieve information about Hong Kong personalised (vanity) car plates",
   "keywords": [
     "pvrm",
+    "tvrm",
     "opendata",
     "vanity",
+    "license",
     "plate",
     "car",
+    "mark",
     "hongkong",
     "852"
   ],
