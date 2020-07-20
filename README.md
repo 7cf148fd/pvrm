@@ -1,42 +1,47 @@
 # pvrm
-[![7CF](https://img.shields.io/static/v1?label=by&message=7cf148fd&color=fc7&style=flat)](https://7cf148fd.wordpress.com/about-en/) [![VERSION](https://img.shields.io/github/package-json/v/7cf148fd/pvrm)](https://github.com/7cf148fd/pvrm) [![STATUS](https://img.shields.io/static/v1?label=status&message=public&color=191&style=flat)]() [![LICENSE](https://img.shields.io/static/v1?label=license&message=MIT&color=777&style=flat)](https://opensource.org/licenses/MIT)
+[![7CF](https://img.shields.io/static/v1?label=by&message=7cf148fd&color=fc7&style=flat)](https://7cf148fd.wordpress.com/about-en/) [![VERSION](https://img.shields.io/github/package-json/v/7cf148fd/pvrm)](https://github.com/7cf148fd/pvrm) [![STATUS](https://img.shields.io/static/v1?label=status&message=dev&color=911&style=flat)]() [![LICENSE](https://img.shields.io/static/v1?label=license&message=MIT&color=777&style=flat)](https://opensource.org/licenses/MIT)
 
 ## Description
 
-PVRM stands for *Personalized Vehicle Registration Marks*. This is the [Hong Kong government auction system](https://www.td.gov.hk/en/public_services/vehicle_registration_mark/index.html), created in 2006, by which citizens can bid for a particular car plate. Auctions are public and the price of each plate published in a (dirty) PDF file every month.
+PVRM stands for *Personalized Vehicle Registration Marks*. This is the [Hong Kong government auction system](https://www.td.gov.hk/en/public_services/vehicle_registration_mark/index.html), created in 2006, by which citizens can bid for a *special vehicle registration mark* (ie a non-standard number). Auctions are public and the price of each plate published in a (dirty) PDF file at the end of each auction.
 
-This package offers a simple query system for people to know whether a plate is available and if not, when it was initially purchased from the government and at what price. The database includes:
+This package offers a simple query system for people willing to know whether a plate has already been auctioned and if the case, when the plate was initially purchased from the government and at what price. The underlying database includes:
 * PVRM plates allocated since the first auction held by the government on 16 September 2006.
 * PVRM plates auctioned during the annual lunar year auctions.
 
 Please note that TVRM plates are *not* included in this set.
+PVRM ordinary registration marks (such as HK+digits or XX+digits) are *not* included.
 
 ## Important notes
 
 Return format:
 ```js
-{ plate: '<string>',      // the plate found (force UPPERCASE)
+{ plate: '<string>',      // the plate found (UPPERCASE)
   auctionDate: '<date>',  // in ISO-8601 format (standard JSON date)
   value: <value>,         // in Hong Kong dollars
  }
 ```
 
 The module cleans up the argument to match qualifying PVRM criteria. In particular:
+* Everything is converted to UPPERCASE
 * All 'O' and 'I' letters are replaced by '0' and '1' digits, respectively
-* Spaces are removed (plates that differ only by spaces are not allowed)
+* *Spaces are removed*, as plate requests that differ from an existing one only by spaces are not allowed
 
 The `auctionDate` has its hour arbitrarily set to 9:25am Hong Kong time, which is the usual auction time.
 
 If the plate is not found, the auction date will be set to `undefined` and Value set to zero.
 
-The module will throw an error if:
-* the requested plate, even after clean-up, is more than 8 characters
-* the requested plate contains illegal characters (eg, 'Q' letter, diacritics, etc.)
-
-Please note that due to the uneven frequency of auctions, it is essential to keep the package regularly updated.
+The module will throw an error if the requested plate:
+* is longer than 8 characters, even after clean-up and space removal
+* contains illegal characters (eg, 'Q' letter, diacritics, etc.)
+* is a TVRM plate (eg 1-4 digits only, 2 letters plus 1-4 digits, or special A/F plates)
 
 I am doing my best to keep the module updated as fast as possible after auctions.
-Don't hesitate to contact me if you detect errors.
+Please note that due to the uneven frequency of auctions, it is essential to keep the package regularly updated.
+Don't hesitate to contact me if you detect errors or missing data, as the database is updated semi-manually.
+
+Thanks for respecting the copyright and quoting my name in your work if you use the module.
+I have spent a significant amount of personal time compiling this data for the past few years.
 
 ## Install
 
@@ -47,12 +52,26 @@ Don't hesitate to contact me if you detect errors.
 ```js
 const pvrm = require('pvrm')
 
-// usage: pvrm( 'plate' )
+// usage: pvrm.query( 'plate' )
 
-pvrm( 'I LOVE U' )
-// { plate:'1L0VEU', auctionDate:'2016-09-16T02:25:00.000Z', value:1400000 }
+pvrm.query( 'I LOVE U' )
+// { plate:'1L0VEU', auctionDate:'2006-09-16T09:25:00.000+08', value:1400000 }
 
-pvrm( '' )
-// 
+pvrm.query( 'HAVE FUN' )
+// { plate:'HAVEFUN', auctionDate:'2008-06-14T09:25:00.000+08', value:7000 }
 
+pvrm.query( 123456 )
+// { plate:'123456', auctionDate:'2009-12-19T09:25:00.000+08', value:34000 }
+
+pvrm.query( '7CF148FD' )
+// { plate:'7CF148FD', auctionDate:undefined, value:0 }
+
+pvrm.query( '123456789' )
+// Error plate too long
+
+pvrm.query( 'AB 1234' )
+// Error TVRM number
+
+pvrm.query( 'ABC Q' )
+// Error invalid characters
 ```
