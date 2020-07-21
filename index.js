@@ -18,7 +18,7 @@ exports.query = query
 function cleanup( str )
 { var clean = str.replace(/ /g,'').replace(/O/g,'0').replace(/I/g,'1').normalize("NFD").replace(/[\u0300-\u036f]/g,'').toUpperCase()
   if( clean.match(/Q/) ) { throw new Error('Invalid character') }
-  if( clean.length > 7 ) { throw new Error('Mark is too long') }
+  if( clean.length > 8 ) { throw new Error('Mark is too long') }
   if( clean.match(/^[A-Z]{0,2}[1-9][0-9]{0,3}$/) ) { throw new Error('Mark is TVRM') }
   if( ! clean.match(/^[A-Z0-9]*$/) ) { throw new Error('Invalid character') }
   return( clean )
