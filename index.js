@@ -1,7 +1,7 @@
 const db = require( './db.json' )
 const crypto = require( 'crypto' )
 
-function plate( str )
+function query( str )
 { var clean = cleanup( str )
   var hash = crypto.createHash('sha1').update(clean).digest('hex')
 
@@ -13,7 +13,7 @@ function plate( str )
    }
   else { return ( { plate:clean, auctionDate:'', value:0 } ) }
  }
-exports.plate = plate
+exports.query = query
 
 function cleanup( str )
 { var clean = str.replace(/ /g,'').replace(/O/g,'0').replace(/I/g,'1').normalize("NFD").replace(/[\u0300-\u036f]/g,'').toUpperCase()
