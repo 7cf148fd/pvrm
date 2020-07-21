@@ -11,7 +11,8 @@ testList = { 'valid PVRM mark (text)': { data:'have fun', expected:{ mark:'HAVEF
            , 'more than 8 characters': { data:'123456789', expected:'error' }
            , 'TVRM mark': { data:'AB 1234', expected:'error' }
            , 'Illegal character (Q)': { data:'FAQ', expected:'error' }
-           , 'Illegal character (special char)': { data:'AŁERT', expected:'error' }
+           , 'Illegal character (non-ASCII letter)': { data:'AŁERT', expected:'error' }
+           , 'Illegal character (special character)': { data:'!2345', expected:'error' }
             }
 
 for (var plate in testList)

@@ -30,19 +30,19 @@ The module cleans up the argument to match qualifying PVRM criteria. In particul
 
 The `auctionDate` has its hour arbitrarily set to 9:25am Hong Kong time, which is the usual auction time.
 
-If the plate is not found, the auction date will be set to `undefined` and Value set to zero.
+If the plate is not found, the *auction date* is not set and *value* is set to zero.
 
 The module will throw an error if the requested plate:
 * is longer than 8 characters, even after clean-up and space removal
-* contains the letter 'Q' or other special/illegal characters
+* contains the letter 'Q' or other special/illegal characters (eg, non-ASCII letters)
 * is a TVRM plate (eg 1-4 digits only, 2 letters plus 1-4 digits, or special A/F plates)
 
 I am doing my best to keep the module updated as fast as possible after auctions.
 Please note that due to the uneven frequency of auctions, it is essential to keep the package regularly updated.
 Don't hesitate to contact me if you detect errors or missing data, as the database is updated semi-manually.
 
-Thanks for respecting the copyright and quoting my name in your work if you use the module.
-I have spent a significant amount of personal time compiling this data for the past few years.
+**Thanks for respecting the copyright and quoting my name in your work if you use the module.
+I have spent a significant amount of personal time compiling this data for the past few years.**
 
 ## Install
 
