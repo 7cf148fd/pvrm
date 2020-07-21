@@ -16,7 +16,7 @@ PVRM ordinary registration marks (such as HK+digits or XX+digits) are *not* incl
 
 Return format:
 ```js
-{ mark: '<string>',      // cleanup result (UPPERCASE)
+{ mark: '<string>',       // cleanup result (see below)
   auctionDate: '<date>',  // in ISO-8601 format (standard JSON date)
   value: <value>,         // in Hong Kong dollars
  }
