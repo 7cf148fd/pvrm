@@ -67,7 +67,7 @@ pvrm.query( 123456 )
 pvrm.query( '7CF148FD' )
 // { mark:'7CF148FD', value:0 }
 
-pvrm.query( '12456789' )
+pvrm.query( '123456789' )
 // Error Mark is too long
 
 pvrm.query( 'AB 1234' )
