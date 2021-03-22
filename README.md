@@ -76,8 +76,3 @@ pvrm.query( 'AB 1234' )
 pvrm.query( 'FAQ' )
 // Error Invalid character
 ```
-
-## Auction Log
-
-### v1.0.7 (20210322)
-Updated database to include Lunar New Year special auction results of 7 March 2021
