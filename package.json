@@ -1,6 +1,6 @@
 {
   "name": "pvrm",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A node.js module to retrieve information about Hong Kong personalised (vanity) car plates",
   "keywords": [
     "pvrm",
@@ -17,7 +17,9 @@
     "852"
   ],
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "npm": "^6.14.11"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/7cf148fd/pvrm.git"
